@@ -72,14 +72,14 @@ function App() {
     return (
         <>
             <p>
-                myapp
+                myapp2
             </p>
             <div className="App">
                 {
-                    isTokenFound && <h1> Notification permission enabled 👍🏻 </h1>
+                    isTokenFound && <p> Notification permission enabled 👍🏻 </p>
                 }
                 {
-                    !isTokenFound && <h1> Need notification permission ❗️ </h1>
+                    !isTokenFound && <p> Need notification permission ❗️ </p>
                 }
 
                 {
