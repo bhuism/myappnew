@@ -51,7 +51,7 @@ function App() {
                 // shows on the UI that permission is required
             }
         }).catch((err) => {
-            console.log('An error occurred while retrieving token. ', err);
+            setTokenFound('An error occurred while retrieving token. ' + JSON.stringify(err));
             // catch error while creating client token
         });
     }
@@ -59,7 +59,8 @@ function App() {
     useEffect(() => {
         if (isTokenFound) {
             setMessage("[registered]");
-            onMessage(messaging, (payload) => {
+            return onMessage(messaging, (payload) => {
+                console.log("got message");
 //                console.log({payload: payload});
                 setMessage(JSON.stringify(payload));
             })
@@ -72,7 +73,7 @@ function App() {
     return (
         <>
             <p>
-                myapp3
+                myapp4
             </p>
             <div className="App">
                 {
