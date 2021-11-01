@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {getMessaging, getToken} from 'firebase/messaging';
+import {getMessaging, getToken, onMessage} from 'firebase/messaging';
 
 
 // Import the functions you need from the SDKs you need
@@ -29,6 +29,8 @@ function App() {
 
     const [isTokenFound, setTokenFound] = useState(false);
 
+    const [message, setMessage] = useState<string>("[default]");
+
     useEffect(() => {
         createToken();
     }, [])
@@ -54,6 +56,16 @@ function App() {
         });
     }
 
+    useEffect(() => {
+        if (isTokenFound) {
+            setMessage("[registered]");
+            onMessage(messaging, (payload) => {
+//                console.log({payload: payload});
+                setMessage(JSON.stringify(payload));
+            })
+        }
+    }, [isTokenFound])
+
 
 // inside the jsx being returned:
 
@@ -70,6 +82,11 @@ function App() {
                     !isTokenFound && <h1> Need notification permission ❗️ </h1>
                 }
 
+                {
+                    <p>
+                        {message}
+                    </p>
+                }
             </div>
         </>
     );
