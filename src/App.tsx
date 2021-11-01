@@ -27,7 +27,7 @@ export const messaging = getMessaging(app);
 
 function App() {
 
-    const [isTokenFound, setTokenFound] = useState(false);
+    const [isTokenFound, setTokenFound] = useState<string>();
 
     const [message, setMessage] = useState<string>("[default]");
 
@@ -42,12 +42,12 @@ function App() {
         return getToken(messaging, {vapidKey: 'BDhWi470NaYSLRcdBf6HY-qXJjP-d5RGvxKOZE0mdGhqxjDj7cI9Zvmmhuo0gPY8peVCzNHAHON8ckMbgVjvnFI'}).then((currentToken) => {
             if (currentToken) {
                 console.log('current token for client: "' + currentToken + '"');
-                setTokenFound(true);
+                setTokenFound('current token for client: "' + currentToken + '"');
                 // Track the token -> client mapping, by sending to backend server
                 // show on the UI that permission is secured
             } else {
                 console.log('No registration token available. Request permission to generate one.');
-                setTokenFound(false);
+                setTokenFound('No registration token available. Request permission to generate one.');
                 // shows on the UI that permission is required
             }
         }).catch((err) => {
@@ -72,19 +72,19 @@ function App() {
     return (
         <>
             <p>
-                myapp2
+                myapp3
             </p>
             <div className="App">
                 {
                     isTokenFound && <p> Notification permission enabled 👍🏻 </p>
                 }
                 {
-                    !isTokenFound && <p> Need notification permission ❗️ </p>
+                    isTokenFound === undefined ? <p> Need notification permission ❗️ </p> : <p>{isTokenFound}</p>
                 }
 
                 {
                     <p>
-                        {message}
+                        last message: {message}
                     </p>
                 }
             </div>
